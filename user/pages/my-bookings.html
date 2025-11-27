@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Event Rental System</title>
+    <link rel="stylesheet" href="/user/pages/my-bookings.css">
+</head>
+<body>
+    <div class="bookings-container">
+        <header class="bookings-header">
+            <h1>My Bookings</h1>
+            <div class="header-actions">
+                <button id="backBtn" class="back-btn">Back to Dashboard</button>
+                <button id="refreshBtn" class="refresh-btn">Refresh</button>
+            </div>
+        </header>
+
+        <div class="bookings-content">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <p id="totalBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active</h3>
+                    <p id="activeBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <p id="pendingBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <p id="completedBookings">0</p>
+                </div>
+            </div>
+
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="dateFilter">Filter by Date:</label>
+                    <select id="dateFilter">
+                        <option value="all">All Dates</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="past">Past Bookings</option>
+                        <option value="current">Current</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="bookings-table-container">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <tr>
+                            <td colspan="5" class="loading-cell">Loading bookings...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noBookings" class="no-bookings" style="display: none;">
+                <h3>No Bookings Found</h3>
+                <p>You haven't made any bookings yet.</p>
+                <a href="/user/user-dashboard.html" class="cta-btn">Book Now</a>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;">
+            <h3>Error Loading Bookings</h3>
+            <p id="errorText">Unable to load your bookings. Please try again.</p>
+            <button onclick="location.reload()">Retry</button>
+        </div>
+    </div>
+
+    <script type="module" src="/user/pages/my-bookings.js"></script>
+</body>
+</html>

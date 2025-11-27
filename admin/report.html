@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Tamasha Event Rental System</title>
+    <link rel="stylesheet" href="/admin/report.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Tamasha Event Rental - Reports</h1>
+            <div class="header-actions">
+                <span id="adminName">Admin</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+        
+        <main class="dashboard-main">
+            <div class="reports-container">
+                <!-- Report Controls -->
+                <div class="report-controls">
+                    <div class="control-group">
+                        <label for="reportPeriod">Report Period:</label>
+                        <select id="reportPeriod">
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="quarter">This Quarter</option>
+                            <option value="year">This Year</option>
+                            <option value="custom">Custom Date Range</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group" id="customDateRange" style="display: none;">
+                        <label for="startDate">From:</label>
+                        <input type="date" id="startDate">
+                        <label for="endDate">To:</label>
+                        <input type="date" id="endDate">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="reportType">Report Type:</label>
+                        <select id="reportType">
+                            <option value="performance">Performance Overview</option>
+                            <option value="bookings">Booking Analysis</option>
+                            <option value="revenue">Revenue Report</option>
+                            <option value="popular">Most Booked Items</option>
+                            <option value="customer">Customer Analysis</option>
+                        </select>
+                    </div>
+                    
+                    <button id="generateReport" class="generate-btn">Generate Report</button>
+                    <div class="export-buttons">
+                        <button id="exportExcel" class="export-btn">Export Excel</button>
+                        <button id="exportPDF" class="export-btn">Export PDF</button>
+                        <button id="dashboardBtn" class="dashboard-btn">Dashboard</button>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingState" class="loading-state hidden">
+                    <div class="spinner"></div>
+                    <p>Generating report...</p>
+                </div>
+
+                <!-- Report Results -->
+                <div id="reportResults" class="report-results hidden">
+                    <div class="report-header">
+                        <h2 id="reportTitle">Performance Overview Report</h2>
+                        <p id="reportPeriodText" class="period-text"></p>
+                        <p id="reportGenerated" class="generated-text"></p>
+                    </div>
+                    
+                    <!-- Summary Stats -->
+                    <div class="summary-stats" id="summaryStats"></div>
+                    
+                    <!-- Charts Section -->
+                    <div class="charts-section" id="chartsSection"></div>
+                    
+                    <!-- Detailed Data -->
+                    <div class="detailed-data" id="detailedData"></div>
+                </div>
+
+                <!-- Error State -->
+                <div id="errorState" class="error-state hidden">
+                    <p>Error generating report. Please try again.</p>
+                    <button onclick="hideError()" class="retry-btn">Retry</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/admin/report.js"></script>
+</body>
+</html>

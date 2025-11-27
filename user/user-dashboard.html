@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Event Rental System</title>
+    <link rel="stylesheet" href="/user/user-dashboard.css">
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px;
+            text-align: center;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .error-message h3 {
+            margin-bottom: 10px;
+            color: #721c24;
+        }
+        
+        .error-message button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .welcome-placeholder {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .welcome-placeholder h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading User Dashboard...</p>
+    </div>
+
+    <div id="errorMessage" class="error-message" style="display: none;">
+        <h3>Connection Error</h3>
+        <p id="errorText">Unable to connect to the server. Please check your internet connection and try again.</p>
+        <button onclick="location.reload()">Retry</button>
+    </div>
+
+    <div class="dashboard-container" style="display: none;">
+        <header class="dashboard-header">
+            <h1>Tamasha Event Rentals</h1>
+            <div class="header-actions">
+                <span id="userName">User</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+        
+        <nav class="dashboard-nav">
+            <a href="#" class="nav-link active" data-page="welcome">Welcome</a>
+            <a href="#" class="nav-link" data-page="book">Book Items</a>
+            <a href="/user/pages/my-bookings.html" class="nav-link">My Bookings</a>
+            <a href="/user/pages/payments.html" class="nav-link">Payments</a>
+            <a href="#" class="nav-link" data-page="notifications">Notifications</a>
+        </nav>
+        
+        <main class="dashboard-main">
+            <div id="content" class="content-area">
+                <div class="welcome-placeholder">
+                    <h2>Welcome to Your Dashboard</h2>
+                    <p>Loading your rental dashboard...</p>
+                </div>
+            </div>
+        </main>
+        
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Load the dashboard module -->
+    <script type="module" src="/assets/js/user-dashboard.js"></script>
+</body>
+</html>

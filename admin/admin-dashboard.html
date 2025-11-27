@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Tamasha Event Rental System</title>
+    <link rel="stylesheet" href="/admin/admin-dashboard.css">
+    
+    <!-- Load Supabase CDN first -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+
+        .welcome-placeholder {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading Admin Dashboard...</p>
+    </div>
+
+    <div class="dashboard-container hidden">
+        <header class="dashboard-header">
+            <h1>Tamasha Event Rental - Admin</h1>
+            <div class="header-actions">
+                <span id="adminName">Admin</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+        
+        <nav class="dashboard-nav">
+            <a href="#" class="nav-link active">Welcome</a>
+            <a href="/admin/pages/view-bookings.html" class="nav-link">View Bookings</a>
+            <a href="/admin/pages/view-payments.html" class="nav-link">View Payments</a>
+            <a href="/admin/edit-stock.html" class="nav-link">Edit Stock</a>
+            <a href="/admin/report.html" class="nav-link">Reports</a>
+        </nav>
+        
+        <main class="dashboard-main">
+            <div id="content" class="content-area">
+                <div class="welcome-placeholder">
+                    <h2>Welcome to Admin Dashboard</h2>
+                    <p>Loading dashboard content...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize Supabase directly
+        const supabaseUrl = 'https://humeamgpybksjeyjvvsw.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1bWVhbWdweWJrc2pleWp2dnN3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2Mjg3Mzc1MiwiZXhwIjoyMDc4NDQ5NzUyfQ.ZAtK_gIRVNLwiZLkLwbiSCLgv1TWVI8dsNhmK4zmw3E';
+        const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+        // Dashboard functionality
+        const initDashboard = async () => {
+            try {
+                // Check authentication
+                const { data: { user }, error } = await supabase.auth.getUser();
+                
+                if (error || !user) {
+                    console.log('No user found, redirecting to login');
+                    window.location.href = '/auth/admin-login.html';
+                    return;
+                }
+
+                // Check if user is admin
+                const { data: profile, error: profileError } = await supabase
+                    .from('profiles')
+                    .select('role, full_name')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profileError || !profile || profile.role !== 'admin') {
+                    console.log('User is not admin, redirecting');
+                    await supabase.auth.signOut();
+                    window.location.href = '/auth/admin-login.html';
+                    return;
+                }
+
+                // Update admin name
+                if (profile.full_name) {
+                    document.getElementById('adminName').textContent = profile.full_name;
+                }
+
+                // Show dashboard
+                document.getElementById('loadingOverlay').classList.add('hidden');
+                document.querySelector('.dashboard-container').classList.remove('hidden');
+
+                // Load welcome page
+                loadWelcomePage();
+
+                // Setup logout
+                document.getElementById('logoutBtn').addEventListener('click', async () => {
+                    await supabase.auth.signOut();
+                    window.location.href = '/auth/admin-login.html';
+                });
+
+            } catch (error) {
+                console.error('Dashboard error:', error);
+                window.location.href = '/auth/admin-login.html';
+            }
+        };
+
+        async function loadWelcomePage() {
+            const content = document.getElementById('content');
+            if (!content) return;
+
+            try {
+                const { data: bookings } = await supabase.from('bookings').select('id, total_amount, status');
+                const { data: payments } = await supabase.from('payments').select('amount, status');
+                
+                const totalBookings = bookings?.length || 0;
+                const totalRevenue = payments?.filter(p => p.status === 'completed').reduce((sum, payment) => sum + payment.amount, 0) || 0;
+                const activeRentals = bookings?.filter(b => b.status === 'active').length || 0;
+                
+                content.innerHTML = `
+                    <div class="welcome-page">
+                        <h2>Welcome, Admin!</h2>
+                        <div class="admin-stats">
+                            <div class="stat-card">
+                                <h3>Total Bookings</h3>
+                                <p>${totalBookings}</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Total Revenue</h3>
+                                <p>Ksh ${totalRevenue.toLocaleString()}</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Active Rentals</h3>
+                                <p>${activeRentals}</p>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <h3>Quick Actions</h3>
+                            <div class="action-buttons">
+                                <a href="/admin/pages/view-bookings.html" class="action-btn">View Bookings</a>
+                                <a href="/admin/pages/view-payments.html" class="action-btn">View Payments</a>
+                                <a href="/admin/edit-stock.html" class="action-btn">Edit Stock</a>
+                                <a href="/admin/report.html" class="action-btn">View Reports</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error loading welcome page:', error);
+                content.innerHTML = '<p>Error loading dashboard data</p>';
+            }
+        }
+
+        // Start the dashboard
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

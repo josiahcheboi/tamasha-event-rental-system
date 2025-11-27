@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Callback - Event Rental System</title>
+    <link rel="stylesheet" href="payment-callback.css">
+</head>
+<body>
+    <div class="callback-container">
+        <div class="callback-card">
+            <div id="successCallback" class="callback-message success" style="display: none;">
+                <div class="icon">✓</div>
+                <h2>Payment Successful!</h2>
+                <p>Your M-Pesa payment has been processed successfully.</p>
+                <div class="callback-details">
+                    <p><strong>Receipt Number:</strong> <span id="receiptNumber"></span></p>
+                    <p><strong>Amount:</strong> <span id="paymentAmount"></span></p>
+                    <p><strong>Date:</strong> <span id="paymentDate"></span></p>
+                </div>
+                <div class="action-buttons">
+                    <button id="goToBookingsBtn" class="action-btn">View Bookings</button>
+                    <button id="goToDashboardBtn" class="action-btn secondary">Dashboard</button>
+                </div>
+            </div>
+            
+            <div id="errorCallback" class="callback-message error" style="display: none;">
+                <div class="icon">✗</div>
+                <h2>Payment Failed</h2>
+                <p id="errorMessageText">There was an error processing your payment.</p>
+                <div class="action-buttons">
+                    <button id="retryPaymentBtn" class="action-btn">Retry Payment</button>
+                    <button id="goBackBtn" class="action-btn secondary">Go Back</button>
+                </div>
+            </div>
+            
+            <div id="processingCallback" class="callback-message info">
+                <div class="icon">⏳</div>
+                <h2>Processing Payment</h2>
+                <p>Please wait while we process your M-Pesa payment...</p>
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="../assets/js/payment-callback.js"></script>
+</body>
+</html>

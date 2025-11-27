@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Event Rental System</title>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="checkout-card">
+            <h2>Checkout</h2>
+            
+            <div class="action-buttons-top">
+                <button id="dashboardBtn" class="action-btn secondary">Dashboard</button>
+                <button id="cancelBtn" class="action-btn cancel">Cancel</button>
+            </div>
+            
+            <div class="booking-summary">
+                <h3>Booking Summary</h3>
+                <p><strong>Dates:</strong> <span id="bookingDates"></span></p>
+                <p><strong>Grand Total:</strong> <span id="grandTotal">Ksh 0</span></p>
+            </div>
+            
+            <form id="checkoutForm" class="checkout-form">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number (for M-Pesa)</label>
+                    <input type="tel" id="phone" name="phone" placeholder="07XXXXXXXX" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="checkout-btn">Pay with M-Pesa</button>
+                </div>
+            </form>
+            
+            <div id="successMessage" class="message success" style="display: none;">
+                <h3>Booking Successful!</h3>
+                <p>Your payment has been processed successfully.</p>
+                <div class="action-buttons">
+                    <button id="viewBookingsBtn" class="action-btn">View Bookings</button>
+                    <button id="closeBtn" class="action-btn secondary">Close</button>
+                </div>
+            </div>
+            
+            <div id="errorMessage" class="message error" style="display: none;">
+                <h3>Booking Failed!</h3>
+                <p id="errorText">There was an error processing your booking.</p>
+                <div class="action-buttons">
+                    <button id="retryBtn" class="action-btn">Retry</button>
+                    <button id="closeErrorBtn" class="action-btn secondary">Close</button>
+                </div>
+            </div>
+            
+            <div id="message" class="message"></div>
+        </div>
+    </div>
+    
+    <script type="module" src="../assets/js/checkout.js"></script>
+</body>
+</html>

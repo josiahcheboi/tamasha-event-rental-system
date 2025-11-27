@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Event Rental System</title>
+    <link rel="stylesheet" href="/user/pages/payments.css">
+</head>
+<body>
+    <div class="payments-container">
+        <header class="payments-header">
+            <h1>Payment History</h1>
+            <div class="header-actions">
+                <button id="backBtn" class="back-btn">Back to Dashboard</button>
+                <button id="refreshBtn" class="refresh-btn">Refresh</button>
+            </div>
+        </header>
+
+        <div class="payments-content">
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h3>Total Payments</h3>
+                    <p id="totalPayments">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Amount</h3>
+                    <p id="totalAmount">KES 0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <p id="completedPayments">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <p id="pendingPayments">0</p>
+                </div>
+            </div>
+
+            <div class="filters-section">
+                <div class="filter-group">
+                    <label for="statusFilter">Filter by Status:</label>
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                        <option value="refunded">Refunded</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="methodFilter">Payment Method:</label>
+                    <select id="methodFilter">
+                        <option value="all">All Methods</option>
+                        <option value="mpesa">M-Pesa</option>
+                        <option value="card">Card</option>
+                        <option value="cash">Cash</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="payments-table-container">
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Receipt No</th>
+                            <th>Booking ID</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                        <tr>
+                            <td colspan="7" class="loading-cell">Loading payments...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noPayments" class="no-payments" style="display: none;">
+                <h3>No Payments Found</h3>
+                <p>You haven't made any payments yet.</p>
+                <a href="/user/user-dashboard.html" class="cta-btn">Make a Booking</a>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message" style="display: none;">
+            <h3>Error Loading Payments</h3>
+            <p id="errorText">Unable to load your payments. Please try again.</p>
+            <button onclick="location.reload()">Retry</button>
+        </div>
+    </div>
+
+    <script type="module" src="/user/pages/payments.js"></script>
+</body>
+</html>

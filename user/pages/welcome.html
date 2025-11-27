@@ -1,0 +1,78 @@
+<div class="welcome-page">
+    <h2>Welcome, <span id="userName"></span>!</h2>
+    <div class="profile-card">
+        <h3>Your Profile</h3>
+        <div class="profile-details">
+            <div class="detail-item">
+                <strong>Email:</strong> <span id="userEmail"></span>
+            </div>
+            <div class="detail-item">
+                <strong>Phone:</strong> <span id="userPhone"></span>
+            </div>
+            <div class="detail-item">
+                <strong>Address:</strong> <span id="userAddress"></span>
+            </div>
+        </div>
+    </div>
+    <div class="quick-stats">
+        <div class="stat-item">
+            <h4>Active Bookings</h4>
+            <p id="activeBookingsCount">0</p>
+        </div>
+        <div class="stat-item">
+            <h4>Total Spent</h4>
+            <p id="totalSpent">Ksh 0</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.welcome-page h2 { 
+    color: #2c3e50; 
+    margin-bottom: 20px; 
+    font-size: 24px; 
+}
+.profile-card { 
+    background: #f8f9fa; 
+    padding: 20px; 
+    border-radius: 8px; 
+    margin-bottom: 20px; 
+    border-left: 4px solid #3498db; 
+}
+.profile-card h3 { 
+    color: #2c3e50; 
+    margin-bottom: 15px; 
+}
+.profile-details { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+}
+.detail-item { 
+    padding: 8px 0; 
+    border-bottom: 1px solid #e9ecef; 
+}
+.detail-item:last-child { border-bottom: none; }
+.quick-stats { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    gap: 15px; 
+}
+.stat-item { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+    text-align: center; 
+    border: 1px solid #e9ecef; 
+}
+.stat-item h4 { 
+    color: #7f8c8d; 
+    font-size: 14px; 
+    margin-bottom: 8px; 
+}
+.stat-item p { 
+    color: #2c3e50; 
+    font-size: 18px; 
+    font-weight: bold; 
+}
+</style>

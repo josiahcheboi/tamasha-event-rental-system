@@ -1,0 +1,60 @@
+<div class="notifications-page">
+    <h2>Notifications</h2>
+    <div class="notifications-controls">
+        <button id="exportNotificationsBtn" class="export-btn">Export Notifications</button>
+    </div>
+    <div class="notifications-list" id="notificationsList">
+        Loading notifications...
+    </div>
+</div>
+
+<style>
+.notifications-page h2 { color: #2c3e50; margin-bottom: 20px; }
+.notifications-controls { 
+    margin-bottom: 20px; 
+    display: flex; 
+    justify-content: flex-end; 
+}
+.export-btn { 
+    background: #3498db; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+.export-btn:hover { background: #2980b9; }
+.notifications-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+}
+.notification-item { 
+    background: white; 
+    padding: 15px; 
+    border-radius: 8px; 
+    border-left: 4px solid #3498db; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+.notification-item.urgent { border-left-color: #e74c3c; }
+.notification-item.warning { border-left-color: #f39c12; }
+.notification-item h4 { 
+    color: #2c3e50; 
+    margin-bottom: 8px; 
+    font-size: 16px; 
+}
+.notification-item p { 
+    color: #7f8c8d; 
+    margin-bottom: 5px; 
+    line-height: 1.4; 
+}
+.notification-item .time { 
+    color: #bdc3c7; 
+    font-size: 12px; 
+    margin-top: 8px; 
+}
+</style>
+
+<script>
+// This script will be handled by admin-dashboard.js
+</script>

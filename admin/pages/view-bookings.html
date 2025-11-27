@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Bookings - Admin</title>
+    <link rel="stylesheet" href="/admin/pages/view-bookings.css">
+</head>
+<body>
+    <div class="bookings-container">
+        <header class="bookings-header">
+            <h1>All Bookings</h1>
+            <div class="header-actions">
+                <button id="dashboardBtn" class="dashboard-btn">Dashboard</button>
+                <button id="exportBtn" class="export-btn">Export</button>
+                <button id="refreshBtn" class="refresh-btn">Refresh</button>
+            </div>
+        </header>
+
+        <div class="bookings-content">
+            <div class="filters-section">
+                <div class="search-group">
+                    <input type="text" id="searchInput" placeholder="Search by customer name, phone, booking ID...">
+                    <button id="searchBtn">Search</button>
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter">
+                        <option value="all">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="active">Active</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <select id="dateFilter">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="stats-overview">
+                <div class="stat-card">
+                    <h3>Total Bookings</h3>
+                    <p id="totalBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active</h3>
+                    <p id="activeBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <p id="pendingBookings">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Revenue</h3>
+                    <p id="totalRevenue">KES 0</p>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Phone</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <tr>
+                            <td colspan="7" class="loading-cell">Loading bookings...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="noBookings" class="no-data" style="display: none;">
+                <h3>No Bookings Found</h3>
+                <p>No bookings match your search criteria.</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/admin/pages/view-bookings.js"></script>
+</body>
+</html>
